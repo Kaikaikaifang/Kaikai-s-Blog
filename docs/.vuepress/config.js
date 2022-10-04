@@ -19,37 +19,6 @@ export default defineUserConfig({
   },
   theme: defaultTheme({
     // 在这里进行配置
-    navbar: [
-      // 嵌套 Group - 最大深度为 2
-      {
-        text: 'Group',
-        children: [
-          {
-            text: 'SubGroup',
-            children: ['/group/sub/foo.md', '/group/sub/bar.md'],
-          },
-        ],
-      },
-      // 控制元素何时被激活
-      {
-        text: 'Group 2',
-        children: [
-          {
-            text: 'Always active',
-            link: '/',
-            // 该元素将一直处于激活状态
-            activeMatch: '/',
-          },
-          {
-            text: 'Active on /foo/',
-            link: '/not-foo/',
-            // 该元素在当前路由路径是 /foo/ 开头时激活
-            // 支持正则表达式
-            activeMatch: '^/foo/',
-          },
-        ],
-      },
-    ],
     logo: '/images/logo.jpg',
     logoDark: '/images/logo_dark.jpg',
     repo: 'https://github.com/Kaikaikaifang/Kaikai-s-Blog',
@@ -64,7 +33,12 @@ export default defineUserConfig({
         danger: '危险',
         notFound: ['没有找到该页面哦'],
         backToHome: '返回首页',
-
+        navbar: [
+          {
+            text: '区块链技术',
+            link: '/Blockchain/summary.md'
+          }
+        ]
       },
       '/en/': {
         selectLanguageName: 'English',
@@ -72,7 +46,13 @@ export default defineUserConfig({
         editLinkText: 'Edit this page',
         contributorsText: 'Contributors',
         tip: 'TIP',
-        warning: 'WARNING'
+        warning: 'WARNING',
+        navbar: [
+          {
+            text: 'Blockchain',
+            link: '/Blockchain/summary.md'
+          }
+        ]
       },
     },
     sidebar: 'auto',
@@ -81,6 +61,6 @@ export default defineUserConfig({
     docsDir: "docs",
     lastUpdated: true,
     contributors: true
-  }),
+  })
 })
 
