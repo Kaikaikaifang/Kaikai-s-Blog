@@ -57,11 +57,20 @@ export default defineUserConfig({
         selectLanguageName: '简体中文',
         lastUpdatedText: '最近更新时间',
         editLinkText: '编辑页面',
+        contributorsText: '贡献者',
+        tip: '提示',
+        warning: '警告',
+        danger: '危险',
+        notFound: ['没有找到该页面哦'],
+        backToHome: '返回首页'
       },
       '/en/': {
         selectLanguageName: 'English',
         lastUpdatedText: 'Last Updated',
         editLinkText: 'Edit this page',
+        contributorsText: 'Contributors',
+        tip: 'TIP',
+        warning: 'WARNING'
       },
     },
     // sidebar: 'auto'
@@ -83,6 +92,7 @@ export default defineUserConfig({
     editLink: true,
     docsDir: "docs",
     lastUpdated: true,
+    contributors: true
   }),
 })
 
