@@ -37,6 +37,20 @@ export default defineUserConfig({
           {
             text: '区块链技术',
             link: '/Blockchain/summary.md'
+          },
+          {
+            text: '前端',
+            children: [
+              {
+                text: 'Vue',
+                children: [
+                  {
+                    text: 'LearnVue',
+                    link: '/FrontEnd/Vue/LearnVue.md'
+                  }
+                ]
+              }
+            ]          
           }
         ]
       },
@@ -51,6 +65,20 @@ export default defineUserConfig({
           {
             text: 'Blockchain',
             link: '/Blockchain/summary.md'
+          },
+          {
+            text: 'FrontEnd',
+            children: [
+              {
+                text: 'Vue',
+                children: [
+                  {
+                    text: 'LearnVue',
+                    link: '/FrontEnd/Vue/LearnVue.md'
+                  }
+                ]              
+              }
+            ]
           }
         ]
       },
