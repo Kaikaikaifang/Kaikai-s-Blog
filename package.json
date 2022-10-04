@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "vuepress": "^2.0.0-beta.51"
+  },
+  "dependencies": {
+    "@vuepress/cli": "^2.0.0-beta.51"
+  },
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  }
+}
