@@ -772,7 +772,7 @@ new Vue({
     2. 销毁后自定义事件会失效，但是原生DOM事件仍然有效
     3. 一般不会在beforeDestroy操作数据，因为即使操作数据也不会再触发更新流程了
 
-![life](images/life.png)
+![life](/images/life.png)
 
 ## 组件化编程
 
@@ -1975,7 +1975,7 @@ methods: {
 
 ### 单向数据流：
 
-![stream](images/stream.png)
+![stream](/images/stream.png)
 
 ```jsx
 /*
@@ -2203,7 +2203,7 @@ export default {
 
 ## Vuex
 
-![vuex](images/vuex.png)
+![vuex](/images/vuex.png)
 
 ### 概念
 
