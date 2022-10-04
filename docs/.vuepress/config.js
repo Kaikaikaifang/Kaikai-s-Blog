@@ -62,7 +62,8 @@ export default defineUserConfig({
         warning: '警告',
         danger: '危险',
         notFound: ['没有找到该页面哦'],
-        backToHome: '返回首页'
+        backToHome: '返回首页',
+
       },
       '/en/': {
         selectLanguageName: 'English',
@@ -73,21 +74,7 @@ export default defineUserConfig({
         warning: 'WARNING'
       },
     },
-    // sidebar: 'auto'
-    sidebar: {
-      '/': [
-        {
-          text: 'VuePress Reference',
-          collapsible: true,
-          children: ['/reference/cli.md', '/reference/config.md'],
-        },
-        {
-          text: 'Bundlers Reference',
-          collapsible: true,
-          children: ['/reference/bundler/vite.md', '/reference/bundler/webpack.md'],
-        },
-      ],
-    },
+    sidebar: 'auto',
     sidebarDepth: 2,   //  number default: 2
     editLink: true,
     docsDir: "docs",
