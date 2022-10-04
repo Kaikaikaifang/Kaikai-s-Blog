@@ -772,7 +772,7 @@ new Vue({
     2. 销毁后自定义事件会失效，但是原生DOM事件仍然有效
     3. 一般不会在beforeDestroy操作数据，因为即使操作数据也不会再触发更新流程了
 
-![Untitled](LearnVue%20ec77b16bdd8341ab895699689dd5649c/Untitled.png)
+![life](images/life.png)
 
 ## 组件化编程
 
@@ -1975,7 +1975,7 @@ methods: {
 
 ### 单向数据流：
 
-![Untitled](LearnVue%20ec77b16bdd8341ab895699689dd5649c/Untitled%201.png)
+![stream](images/stream.png)
 
 ```jsx
 /*
@@ -2203,7 +2203,7 @@ export default {
 
 ## Vuex
 
-![Untitled](LearnVue%20ec77b16bdd8341ab895699689dd5649c/Untitled%202.png)
+![vuex](images/vuex.png)
 
 ### 概念
 
