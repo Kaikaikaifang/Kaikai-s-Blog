@@ -4,7 +4,7 @@ import { defaultTheme } from '@vuepress/theme-default'
 
 
 export default defineUserConfig({
-  base: "/Blog",
+  base: "/Kaikai-s-Blog/",
   locales: {
     '/': {
       lang: 'zh-CN',
