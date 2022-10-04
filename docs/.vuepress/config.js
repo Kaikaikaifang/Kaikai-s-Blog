@@ -4,15 +4,16 @@ import { defaultTheme } from '@vuepress/theme-default'
 
 
 export default defineUserConfig({
-  lang: 'zh-CN',
-  title: "Kaikai's Blog",
-  description: 'Kaikai 的个人博客',
   locales: {
     '/': {
       lang: 'zh-CN',
+      title: "Kaikai 的个人博客",
+      description: 'Kaikai 的个人博客',
     },
     '/en/': {
       lang: 'en-US',
+      title: "Kaikai's Blog",
+      description: 'Kaikai 的个人博客',
     },
   },
   theme: defaultTheme({
@@ -54,9 +55,13 @@ export default defineUserConfig({
     locales: {
       '/': {
         selectLanguageName: '简体中文',
+        lastUpdatedText: '最近更新时间',
+        editLinkText: '编辑页面',
       },
       '/en/': {
         selectLanguageName: 'English',
+        lastUpdatedText: 'Last Updated',
+        editLinkText: 'Edit this page',
       },
     },
     // sidebar: 'auto'
@@ -76,7 +81,8 @@ export default defineUserConfig({
     },
     sidebarDepth: 2,   //  number default: 2
     editLink: true,
-    editLinkText: 'Edit this page',
+    docsDir: "docs",
+    lastUpdated: true,
   }),
 })
 
