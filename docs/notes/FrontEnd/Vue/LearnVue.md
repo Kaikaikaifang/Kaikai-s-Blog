@@ -1,6 +1,12 @@
+---
+lang: zh-CN
+title: LearnVue
+description: Vue 学习之路, 参考 Vue官方文档及尚硅谷Vue教程
+---
+
 # LearnVue
 
-# 初识Vue
+## 初识Vue
 
 1. 创建Vue实例，传入一个配置对象
     
@@ -2666,7 +2672,244 @@ actions: {
 
 ### Module
 
-[Module | Vuex](https://vuex.vuejs.org/zh/guide/modules.html)
+<aside>
+❓ 为了避免store过于臃肿，Vuex允许我们将store分割成**模块(module)**，每个模块拥有自己的state, mutation, action, getter, 甚至是嵌套子模块——从上至下进行同样方式的分割
+
+
+</aside>
+
+```jsx
+// 模块的使用
+const moduleA = {
+	state: () => ({}),
+	mutations: {},
+	actions: {},
+	getters: {}
+}
+
+const moduleB = {
+	state: () => ({}),
+	mutations: {},
+	actions: {},
+	getters: {}
+}
+
+const store = createStore({
+	modules: {
+		a: moduleA,
+		b: moduleB
+	}
+})
+
+// 调用模块的状态
+store.state.a
+store.state.b
+```
+
+```jsx
+// 模块的定义
+const moduleA = {
+	state: () => ({
+		count: 0
+	}),
+	mutations: {
+		increment (state) {
+			state.count++
+		}
+	},
+	getters: {
+		doubleCount (state) {
+			return state.count * 2
+		},
+		sumWithRootCount (state, getters, rootState) {
+			return state.count + rootState.count
+		}
+	},
+	actions: {
+		incrementIfOddOnRootSum ({ state, commit, rootState }) {
+			if ((state.count + rootState.count) % 2 === 1) {
+				commit('increment')
+			}
+		}
+	}
+}
+```
+
+<aside>
+🐳 1. 不同的模块中可以定义相同的action和mutation，它们注册均注册在全局命名空间——因此不同的模块可以对同一个action或mutation做出响应( commit or dispatch )
+2. 不同的无命名空间模块中不可以定义相同的getter，会导致错误（相当于在全局命名空间重复定义相同的计算属性）
+
+
+</aside>
+
+### 命名空间
+
+```jsx
+// 带命名空间的模块
+const store = createStore({
+	modules: {
+		account: {
+			namespaced: true,  // 成为带命名空间的模块
+			state: () => ({}),  // store.state.account
+			getters: {
+				isAdmin (state, getters, rootState, rootGetters) {}  // getters是被局部化的，rootGetters是全局的
+			},  // getters['account/isAdmin']
+			actions: {
+				login ({ commit, dispatch, getters, rootGetters }) {  // 这里接收到的commit, dispatch, getters都是局部化的
+					commit('login')  // '/account/login'同一模块不需要额外添加空间名前缀 
+					commit('someOtherMutation', null, { root: true })  // '/someOtherMutation'
+					dispatch('someOtherAction', null, { root: true })  // 'someOtherAction'
+					dispatch('someOtherAction')  // '/account/someOtherAction'
+				},
+				someOtherAction () {}
+			},  // dispatch('account/login')
+			mutations: {
+				login () {},
+				someOtherMutation () {}
+			},  // commit('account/login')
+
+			// 嵌套模块
+			modules: {
+				// 继承父模块的命名空间
+				myPage: {
+					state: () => ({}),
+					getters: {
+						profile () {
+							...
+						}  // getters['account/profile']
+					}
+				},
+				
+				posts: {
+					namespaced: true,  // 进一步嵌套命名空间
+
+					state: () => ({}),
+					getters: {
+						popular () {}  // getters['account/posts/popular']
+					},
+					actions: {
+						add () {}  // 'account/posts/add'
+						
+						// 在命名空间中注册全局Action
+						someAction: {
+							root: true,
+							handler (namespacedContext, payload) {}  // 'someAction' 
+						}
+					}
+				}
+			}
+		}
+	}
+})
+```
+
+```jsx
+// 使用带命名空间的模块
+computed: {
+	...mapState({
+		a: state => state.module1.a,
+		b: state => state.module1.b
+	}),
+	...mapGetters([
+		'module1/getterA',
+		'module1/getterB'
+	]) 
+},
+methods: {
+	...mapActions(['module/foo', 'module/bar']),
+	...mapMutations(['module/foo', 'module/bar'])
+}
+```
+
+<aside>
+🐳 简化：将空间名称字符串作为第一个参数传给map…函数
+
+
+</aside>
+
+```jsx
+computed: {
+	...mapState('module1', {
+		a: state => state.a
+	}),
+	...mapGetters('module1', [
+		'getterA',
+		'getterB'
+	]) 
+},
+methods: {
+	...mapActions('module', ['foo', 'bar']),
+	...mapMutations('module', ['foo', 'bar'])
+}
+```
+
+<aside>
+🐳 `createNamespacedHelpers` 创建基于某个命名空间的组件绑定辅助函数们
+
+
+</aside>
+
+```jsx
+import { createNamespacedHelpers } from 'vuex'
+
+const { mapState, mapActions } = createNamespacedHelpers('module1')
+
+export default {
+	computed: {
+		...mapState({
+			a: state => state.a
+		}),
+		...mapGetters([
+			'getterA'	
+		])
+	},
+	methods: {
+		...mapActions(['foo']),
+		...mapMutations(['bar'])
+	}
+}
+```
+
+**模块动态注册**
+
+```jsx
+store.registerModule('myModule', {})
+
+store.registerModule(['nested', 'myModule'], {})
+
+store.registerModule('bar', module, { preserveState: true })  
+```
+
+<aside>
+🐳 preserveState: true 表明 module中的state不注册到全局命名空间（store）
+因此在module中的getters/mutations/actions配置项中就不要使用state配置项中的数据了，否则报错
+
+</aside>
+
+### 项目结构
+
+<aside>
+⚠️ 大型应用应该将Vuex的相关代码分割到模块中
+
+
+</aside>
+
+```jsx
+├── index.html
+├── main.js
+├── api
+│   └── ... # 抽取出API请求
+├── components
+│   ├── App.vue
+│   └── ...
+└── store
+    ├── index.js          # 我们组装模块并导出 store 的地方
+    ├── actions.js        # 根级别的 action
+    ├── mutations.js      # 根级别的 mutation
+    └── modules
+        ├── cart.js       # 购物车模块
+        └── products.js   # 产品模块
+```
 
 ## 异步组件
 

@@ -2,3 +2,7 @@ node_modules
 docs/.vuepress/.cache
 docs/.vuepress/.temp
 .vscode
+node_modules/
+hope/.vuepress/.cache/
+hope/.vuepress/.temp/
+hope/.vuepress/dist/
