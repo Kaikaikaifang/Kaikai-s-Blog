@@ -9,5 +9,5 @@ features:
 - title: Works
   details: Kaikai的作品集。
 - title: Tools
-  details: Kaikai的神奇口袋。
+  details: Kaikai的神奇口袋(工具使用)。
 ---
