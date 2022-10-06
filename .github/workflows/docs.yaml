@@ -24,24 +24,31 @@ jobs:
           node-version: '16'
 
       # 缓存 node_modules
-      - name: Cache dependencies
+      - name: Cache node modules
+        id: cache-npm
         uses: actions/cache@v3
-        id: yarn-cache
+        env:
+          cache-name: cache-node-modules
         with:
-          path: |
-            **/node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
 
-      # 如果缓存没有命中，安装依赖
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: List the state of node modules
+        continue-on-error: true
+        run: npm list
+
       - name: Install dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: yarn --frozen-lockfile
+        run: npm install
 
       # 运行构建脚本
       - name: Build VuePress site
-        run: yarn docs:build
+        run: npm run docs:build
 
       # 查看 workflow 的文档来获取更多信息
       # @see https://github.com/crazy-max/ghaction-github-pages
