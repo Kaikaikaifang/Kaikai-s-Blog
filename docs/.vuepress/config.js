@@ -6,6 +6,8 @@ import { pwaPlugin } from '@vuepress/plugin-pwa'
 import { pwaPopupPlugin } from '@vuepress/plugin-pwa-popup'
 import { registerComponentsPlugin } from '@vuepress/plugin-register-components'
 import { getDirname, path } from '@vuepress/utils'
+import { viteBundler } from '@vuepress/bundler-vite'
+
 
 const __dirname = getDirname(import.meta.url)
 
@@ -137,4 +139,8 @@ export default defineUserConfig({
       componentsDir: path.resolve(__dirname, './components'),
     }),
   ],
+  bundler: viteBundler({
+    viteOptions: {},
+    vuePluginOptions: {},
+  }),
 })

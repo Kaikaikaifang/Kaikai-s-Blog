@@ -6,7 +6,7 @@
       name: 'App',
       data() {
           return {
-            Todos: JSON.parse(localStorage.getItem("todos")) || []
+            Todos: JSON.parse(window.localStorage.getItem("todos")) || []
           }
       },
       methods: {
