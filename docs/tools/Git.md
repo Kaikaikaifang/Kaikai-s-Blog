@@ -1,7 +1,7 @@
 ---
 lang: zh-CN
 title: Git
-description: Git的使用
+description: Git用于项目管理
 ---
 
 # Git

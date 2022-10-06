@@ -1,7 +1,7 @@
 ---
 lang: zh-CN
 title: Vuepress
-description: Vuepress 部署个人博客
+description: Vuepress用于个人博客搭建
 ---
 
 # Vuepress

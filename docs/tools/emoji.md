@@ -1,7 +1,7 @@
 ---
 lang: zh-CN
 title: Emoji
-description: Vuepress Emoji
+description: Emoji主要用于文档的编写
 ---
 
 ```Vuepress
