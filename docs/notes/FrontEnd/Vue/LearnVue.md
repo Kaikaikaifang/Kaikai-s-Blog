@@ -407,7 +407,17 @@ new Vue({
     - `:style="[a, b]"` 其中a，b是样式对象
 
 ```html
-<div class="basic" :class="mood" @click="changeMood" :style="styleObj">{{ name }}</div> <br/><br/><div class="basic" :class="classArr" :style="{color: fcolor}">{{ name }}</div> <br/><br/><div class="basic" :class="classObj" :style="styleArr">{{ name }}</div>
+<div class="basic" :class="mood" @click="changeMood" :style="styleObj">
+	{{ name }}
+</div> 
+<br/><br/>
+<div class="basic" :class="classArr" :style="{color: fcolor}">
+	{{ name }}
+</div>
+<br/><br/>
+<div class="basic" :class="classObj" :style="styleArr">
+	{{ name }}
+</div>
 <br/><br/>
 ```
 
@@ -778,7 +788,7 @@ new Vue({
     2. 销毁后自定义事件会失效，但是原生DOM事件仍然有效
     3. 一般不会在beforeDestroy操作数据，因为即使操作数据也不会再触发更新流程了
 
-![life](/images/life.png)
+![life](\images\FrontEnd\Vue\life.png)
 
 ## 组件化编程
 
@@ -1981,7 +1991,7 @@ methods: {
 
 ### 单向数据流：
 
-![stream](/images/stream.png)
+![stream](/images/FrontEnd/Vue/stream.png)
 
 ```jsx
 /*
@@ -2209,7 +2219,7 @@ export default {
 
 ## Vuex
 
-![vuex](/images/vuex.png)
+![vuex](/images/FrontEnd/Vue/vuex.png)
 
 ### 概念
 

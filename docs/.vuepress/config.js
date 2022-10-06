@@ -15,7 +15,7 @@ export default defineUserConfig({
   head: [
     ['link', { rel: 'manifest', href: '/manifest.webmanifest' }],
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
-    ['link', { rel: 'icon', href: '/images/logo/android-chrome-512x512.png' }]
+    ['link', { rel: 'icon', href: '/images/logo/favicon.ico' }]
   ],
   base: "/Kaikai-s-Blog/",
   locales: {
@@ -27,8 +27,7 @@ export default defineUserConfig({
   },
   theme: defaultTheme({
     // 在这里进行配置
-    logo: '/images/logo/logo.jpg',
-    logoDark: '/images/logo/logo_dark.jpg',
+    logo: '/images/logo/flower.png',
     repo: 'https://github.com/Kaikaikaifang/Kaikai-s-Blog',
     locales: {
       '/': {
@@ -82,6 +81,10 @@ export default defineUserConfig({
               {
                 text: 'Emoji',
                 link: '/tools/emoji.md'
+              },
+              {
+                text: 'Vuepress',
+                link: '/tools/Vuepress.md'
               }
             ]
           },
