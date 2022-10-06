@@ -39,7 +39,7 @@ jobs:
             ${{ runner.os }}-
 
       - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-        name: name: Install dependencies
+        name: Install dependencies
         run: npm install
 
       # 运行构建脚本
