@@ -61,6 +61,15 @@ export default defineUserConfig({
                     link: '/notes/FrontEnd/Vue/LearnVue.md'
                   }
                 ]
+              },
+              {
+                text: 'Linux',
+                children: [
+                  {
+                    text: 'Shell',
+                    link: '/notes/Linux/Shell.md'
+                  }
+                ]
               }
             ]
           },
