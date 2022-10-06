@@ -39,11 +39,7 @@ jobs:
             ${{ runner.os }}-
 
       - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-        name: List the state of node modules
-        continue-on-error: true
-        run: npm list
-
-      - name: Install dependencies
+        name: name: Install dependencies
         run: npm install
 
       # 运行构建脚本
