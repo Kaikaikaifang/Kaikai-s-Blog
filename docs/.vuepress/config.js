@@ -109,8 +109,9 @@ export default defineUserConfig({
   }),
   plugins: [
     docsearchPlugin({
-      apiKey: '<API_KEY>',
-      indexName: '<INDEX_NAME>',
+      appId: '2SBIXEV03V',
+      apiKey: 'fa0563f810e45d080569ddb7ef639a1a',
+      indexName: 'pro_NAME',
       locales: {
         '/': {
           placeholder: 'Search Documentation',
