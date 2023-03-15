@@ -62,19 +62,28 @@ function randomInt(range) {
 }
 
 /**
+ * 画布像素重置（指定像素）
+ * @param {HTMLCanvasElement} canvas
+ * @param {Int} width
+ * @param {Int} height
+ * @returns {Boolean} need
+ */
+function resize(canvas, width, height) {
+  let need = canvas.height !== height || canvas.width !== width;
+  if (need) {
+    canvas.height = height;
+    canvas.width = width;
+  }
+  return need;
+}
+
+/**
  * 画布像素重置（与画布大小保持一致）
  * @param {HTMLCanvasElement} canvas 待重置的元素
  * @returns {Boolean} 是否需要重置
  */
 function resizeCanvas(canvas) {
-  let need =
-    canvas.height !== canvas.clientHeight ||
-    canvas.width !== canvas.clientWidth;
-  if (need) {
-    canvas.height = canvas.clientHeight;
-    canvas.width = canvas.clientWidth;
-  }
-  return need;
+  return resize(canvas, canvas.clientWidth, canvas.clientHeight);
 }
 
 /**
@@ -83,9 +92,60 @@ function resizeCanvas(canvas) {
  * @param {HTMLCanvasElement} canvas 待重置的元素
  */
 function resizeCanvasAndSetViewport(gl, canvas) {
-  if (resizeCanvas(canvas)) {
+  // if (resizeCanvas(canvas)) {
+  if (resizeCanvasConsiderRatio(canvas)) {
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height); // 设置视域，告诉webgl将剪裁空间(-1, 1)转换至像素空间(0, width), (0, height)
   }
 }
 
-export { createProgramWithShaderSrc, randomInt, resizeCanvasAndSetViewport };
+/**
+ * 考虑缩放
+ * @param {HTMLCanvasElement} canvas
+ * @returns {Boolean} if need resize
+ */
+function resizeCanvasConsiderRatio(canvas) {
+  const dpr = window.devicePixelRatio;
+  const { width, height } = canvas.getBoundingClientRect();
+  const displayWidth = Math.round(width * dpr);
+  const displayHeight = Math.round(height * dpr);
+  return resize(canvas, displayWidth, displayHeight);
+}
+
+/**
+ * 缩放回调函数
+ * @param {ResizeObserverEntry} entries 所有在观测元素的相关信息
+ */
+function onResize(entries) {
+  entries.forEach((entry) => {
+    let displayHeight;
+    let displayWidth;
+    let dpr = window.devicePixelRatio;
+    if ("devicePixelContentBoxSize" in entry) {
+      // entry中含设备像素的信息，只有这个是最准确的实现！
+      // console.log(entry);
+      console.log(
+        "devicePixelContentBoxSize, displayHeight: ",
+        entry.devicePixelContentBoxSize[0].blockSize
+      );
+      displayHeight = entry.devicePixelContentBoxSize[0].blockSize;
+      displayWidth = entry.devicePixelContentBoxSize[0].inlineSize;
+    } else if ("contentBoxSize" in entry) {
+      // 不含设备像素的信息，含有CSS像素的信息
+      displayHeight = Math.round(entry.contentBoxSize[0].blockSize * dpr);
+      displayWidth = Math.round(entry.contentBoxSize[0].inlineSize * dpr);
+    } else {
+      // 浏览器以上两种信息都不支持
+      // contentRect为历史遗留，兼容性好，以后可能启用！
+      displayHeight = Math.round(entry.contentRect.height * dpr);
+      displayWidth = Math.round(entry.contentRect.width * dpr);
+    }
+    resize(entry.target, displayWidth, displayHeight);
+  });
+}
+
+export {
+  createProgramWithShaderSrc,
+  randomInt,
+  resizeCanvasAndSetViewport,
+  onResize,
+};

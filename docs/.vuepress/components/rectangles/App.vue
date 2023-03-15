@@ -10,6 +10,7 @@ import {
   createProgramWithShaderSrc,
   randomInt,
   resizeCanvasAndSetViewport,
+  onResize,
 } from "./utils.js";
 
 onMounted(() => main());
@@ -58,32 +59,41 @@ function main() {
   // 设置attribute属性从缓冲区（当前的gl.ARRAY_BUFFER）中读取的方式
   gl.vertexAttribPointer(a_position, 2, gl.FLOAT, false, 0, 0);
 
-  // 指定区域及背景
-  resizeCanvasAndSetViewport(gl, canvas);
-  // gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-  gl.clearColor(0, 0, 0, 1);
-  gl.clear(gl.COLOR_BUFFER_BIT);
+  // 观测画布对应的设备像素的变化
+  const resizeObserver = new ResizeObserver((entries) => {
+    onResize(entries);
+    // console.log("set viewport: ", gl.canvas.width, gl.canvas.height);
+    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+    gl.clearColor(0, 0, 0, 1);
+    gl.clear(gl.COLOR_BUFFER_BIT);
 
-  // 调用GLSL程序
-  gl.useProgram(program);
-  gl.uniform2f(u_resolution, gl.canvas.width, gl.canvas.height);
+    // 调用GLSL程序
+    gl.useProgram(program);
+    gl.uniform2f(u_resolution, gl.canvas.width, gl.canvas.height);
 
-  // 绘制50个矩形
-  for (let i = 0; i < 66; i++) {
-    gl.uniform4f(
-      u_color,
-      Math.random(),
-      Math.random(),
-      Math.random(),
-      (Math.random() + 1) * 0.6
-    ); // 设置矩形颜色
-    setRectangle(
-      gl,
-      [randomInt(gl.canvas.width), randomInt(gl.canvas.height)],
-      randomInt(gl.canvas.width),
-      randomInt(gl.canvas.width)
-    );
-    gl.drawArrays(gl.TRIANGLES, 0, 6);
+    // 绘制50个矩形
+    for (let i = 0; i < 66; i++) {
+      gl.uniform4f(
+        u_color,
+        Math.random(),
+        Math.random(),
+        Math.random(),
+        (Math.random() + 1) * 0.6
+      ); // 设置矩形颜色
+      setRectangle(
+        gl,
+        [randomInt(gl.canvas.width), randomInt(gl.canvas.height)],
+        randomInt(gl.canvas.width),
+        randomInt(gl.canvas.width)
+      );
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+    }
+  });
+  try {
+    resizeObserver.observe(canvas, { box: "device-pixel-content-box" });
+  } catch (ex) {
+    console.log("device-pixel-content-box 不支持", ex);
+    resizeObserver.observe(canvas, { box: "content-box" });
   }
 }
 
