@@ -1,0 +1,1 @@
+import{_ as t,o as a,c as l,a as e,b as s}from"./app.e12c69cb.js";const c={},o=e("h1",{id:"shell",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#shell","aria-hidden":"true"},"#"),s(" Shell")],-1),r=[o];function n(_,h){return a(),l("div",null,r)}const i=t(c,[["render",n],["__file","Shell.html.vue"]]);export{i as default};
